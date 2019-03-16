@@ -32,7 +32,7 @@
                     <prefix>builds/ore-spider</prefix>
                     <!-- false:打印日志, true:隐藏日志 -->
                     <quiet>false</quiet>
-       <!--             <baseDir>${project.build.directory}</baseDir> -->
+                    <baseDir>${project.build.directory}</baseDir>
                     <includes>
                         <include>**/target/*.jar</include>
                     </includes>
