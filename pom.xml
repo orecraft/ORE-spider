@@ -13,31 +13,5 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <plugins>
-            <plugin>
-                <groupId>com.fengjx.maven.cdn</groupId>
-                <artifactId>maven-cdn-alioss-plugin</artifactId>
-                <version>1.0.0</version>
-                <configuration>
-                    <!--suppress UnresolvedMavenProperty -->
-                    <endpoint>${OSS_ENDPOINT}</endpoint>
-                    <!--suppress UnresolvedMavenProperty -->
-                    <accessKeyId>${OSS_ACCESS_ID}</accessKeyId>
-                    <!--suppress UnresolvedMavenProperty -->
-                    <accessKeySecret>${OSS_ACCESS_SECRET}</accessKeySecret>
-                    <!-- 上传的Bucket名称 -->
-                    <!--suppress UnresolvedMavenProperty -->
-                    <bucketName>${OSS_BUCKET_NAME}</bucketName>
-                    <!-- oss路径前缀 -->
-                    <prefix>builds/ore-spider</prefix>
-                    <!-- false:打印日志, true:隐藏日志 -->
-                    <quiet>false</quiet>
-                    <baseDir>${project.build.directory}</baseDir>
-                    <includes>
-                        <include>*.*</include>
-                    </includes>
-                </configuration>
-            </plugin>
-        </plugins>
     </build>
 </project>
