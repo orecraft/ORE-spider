@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cn.orecraft</groupId>
     <artifactId>oresearch</artifactId>
-    <version>0.0.${TRAVIS_BUILD_NUMBER}</version>
+    <version>0.0.1-build-${TRAVIS_BUILD_NUMBER}</version>
     <build>
         <resources>
             <resource>
@@ -32,9 +32,9 @@
                     <prefix>builds/ore-spider</prefix>
                     <!-- false:打印日志, true:隐藏日志 -->
                     <quiet>false</quiet>
-                    <baseDir>${project.build.directory}</baseDir>
+                    <baseDir>${project.build.directory}/target2</baseDir>
                     <includes>
-                        <include>**/target/*.jar</include>
+                        <include>*.jar</include>
                     </includes>
                 </configuration>
             </plugin>
