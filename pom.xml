@@ -34,7 +34,7 @@
                     <quiet>false</quiet>
                     <baseDir>${project.build.directory}</baseDir>
                     <includes>
-                        <include>${project.build.finalName}.jar</include>
+                        <include>*.jar</include>
                     </includes>
                     <excludes>
                     </excludes>
