@@ -1,6 +1,6 @@
 package cn.orecraft.search.spider.mysql;
 
-import com.sun.deploy.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import com.sun.istack.internal.logging.Logger;
 
 import java.sql.Connection;
