@@ -1,7 +1,6 @@
 package cn.orecraft.search.spider.mysql;
 
 import org.apache.commons.lang3.StringUtils;
-import com.sun.istack.internal.logging.Logger;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class Db {
     private String table;
@@ -139,7 +139,7 @@ public class Db {
             Class.forName(driver);
             connection = (Connection) DriverManager.getConnection(String.format("jdbc:mysql://%s:%d/%s",config.getHost(),config.getPort(),config.getDatabase()), config.getUser(), config.getPass());
         }catch (ClassNotFoundException e){
-            Logger.getLogger(this.getClass()).info("Final error!");
+            Logger.getLogger("").info("Final error!");
             e.printStackTrace();
         }
 
