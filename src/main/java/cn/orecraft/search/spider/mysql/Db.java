@@ -47,7 +47,6 @@ public class Db {
             wheres.add("or");
             wheres.add(field+op+"'"+value.replace("'","\\'")+"'");
         }
-
         return this;
     }
     public int delete() throws SQLException {
@@ -60,6 +59,7 @@ public class Db {
         sql=sql.replace("%table%",this.table)
                 .replace("%where%",where_str);
         java.util.logging.Logger.getAnonymousLogger().info(sql);
+
         return connection.prepareStatement(sql).executeUpdate();
     }
     public ResultSet select() throws SQLException {
@@ -75,7 +75,7 @@ public class Db {
         return connection.prepareStatement(sql).executeQuery();
 
     }
-    public boolean insert(Map<String,String> map) throws SQLException {
+    public void insert(Map<String,String> map) throws SQLException {
         connect();
         //Set<Map.Entry<String, String>> entryseSet=map.entrySet();
         ArrayList<String> fields = new ArrayList<String>();
@@ -92,7 +92,38 @@ public class Db {
                 .replace("%fields%","("+fields_str+")")
                 .replace("%values%","("+values_str+")");
         java.util.logging.Logger.getAnonymousLogger().info(sql);
-        return connection.prepareStatement(sql).execute();
+        connection.prepareStatement(sql).execute();
+        connection.close();
+    }
+    public void insertAll(Map<String,String>[] maps) throws SQLException {
+        connect();
+        //Set<Map.Entry<String, String>> entryseSet=map.entrySet();
+        ArrayList<String> field_all=new ArrayList<>();
+        ArrayList<String> value_all=new ArrayList<>();
+        for(Map<String,String> map:maps){
+            ArrayList<String> fields = new ArrayList<String>();
+            ArrayList<String> values = new ArrayList<String>();
+            for (Map.Entry<String,String> entry:map.entrySet()) {
+                fields.add(entry.getKey());
+                values.add("'"+entry.getValue().replace("'","\\'")+"'");
+            }
+            String fields_str = StringUtils.join(fields,",");
+            String values_str = StringUtils.join(values,",");
+            field_all.add("("+fields_str+")");
+            value_all.add("("+values_str+")");
+        }
+
+        //Build sql
+        String fields_str = field_all.get(0);
+        String values_str = StringUtils.join(value_all,",");
+
+        String sql=inst_tpl
+                .replace("%table%",this.table)
+                .replace("%fields%",fields_str)
+                .replace("%values%",values_str);
+        java.util.logging.Logger.getAnonymousLogger().info(sql);
+        connection.prepareStatement(sql).execute();
+        connection.close();
     }
     public int update(Map<String,String> map) throws SQLException {
         connect();
@@ -125,6 +156,7 @@ public class Db {
         java.util.logging.Logger.getAnonymousLogger().info(sql);
         ResultSet resultSet = connection.prepareStatement(sql).executeQuery();
         if(resultSet.first()){
+
             return resultSet.getInt(1);
         }else{
             return 0;
@@ -132,7 +164,8 @@ public class Db {
 
     }
     private void connect() throws SQLException {
-        if(connection!=null&&!connection.isClosed()){  //如果已经连接的话，就不再连接了^-^
+        if(connection!=null&&connection.isValid(1000)){  //如果已经连接的话，就不再连接了^-^
+
             return;
         }
         try {
